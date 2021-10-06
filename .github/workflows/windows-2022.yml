@@ -1,6 +1,6 @@
-name: Motdulieu-VPS
+name: windows-2022
 
-on: [push, workflow_dispatch]
+on: workflow_dispatch
 
 jobs:
   build:
@@ -8,11 +8,11 @@ jobs:
     runs-on: windows-2022
 
     steps:
-    - name: Download
+    - name: Download Ngrok
       run: |
         Invoke-WebRequest https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-windows-amd64.zip -OutFile ngrok.zip
-        Invoke-WebRequest https://raw.githubusercontent.com/Motdulieu/Motdulieu-VPS/main/ip.bat -OutFile ip.bat
-    - name: Extract
+        Invoke-WebRequest https://raw.githubusercontent.com/clindaa/gitcode/main/ip.bat -OutFile ip.bat
+    - name: Extract Ngrok Archive
       run: Expand-Archive ngrok.zip
     - name: Auth
       run: .\ngrok\ngrok.exe authtoken $Env:NGROK_AUTH_TOKEN
@@ -26,5 +26,4 @@ jobs:
     - name: INFO VPS
       run: cmd /c ip.bat
     - name: Create Tunnel
-      run: .\ngrok\ngrok.exe tcp --region ap 3389
-      
+      run: .\ngrok\ngrok.exe tcp --region jp 3389
